@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Boggle {
 
   // TODO: Complete a Boggle game that will be used with two views

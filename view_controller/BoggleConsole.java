@@ -12,8 +12,10 @@ public class BoggleConsole {
 	public static void main(String[] args) {
 
 		// Use this for testing
-		char[][] a = { { 'A', 'B', 'S', 'E' }, { 'I', 'M', 'T', 'N' }, { 'N', 'D', 'E', 'D' },
-				{ 'S', 'S', 'E', 'N' }, };
+		char[][] a = { { 'A', 'B', 'S', 'E' }, 
+						{ 'I', 'M', 'T', 'N' }, 
+						{ 'N', 'D', 'E', 'D' },
+						{ 'S', 'S', 'E', 'N' }, };
 
 		DiceTray tray = new DiceTray(a);
 
@@ -26,16 +28,17 @@ public class BoggleConsole {
 		boggle.otherWords(tray);
 		System.out.println("You could have found these " + boggle.getOtherCounts() + " more words:");
 		System.out.println(boggle.getOtherW().trim());
-		
 
 		// TODO: Complete a console game
 	}
+
 	private int score;
 	private ArrayList<String> wordList;
 	private ArrayList<String> incorrectList;
 	private int otherCounts;
 	private String otherW;
-	public BoggleConsole(DiceTray Tray){
+
+	public BoggleConsole(DiceTray Tray) {
 		score = 0;
 	}
 
@@ -59,7 +62,7 @@ public class BoggleConsole {
 		 */
 		this.wordList = new ArrayList<String>();
 		this.incorrectList = new ArrayList<String>();
-		System.out.println("Enter words or ZZ to quite:");
+		System.out.println("Enter words or ZZ to quit:");
 		String word = "";
 		Scanner input = null;
 		while (!word.equals("zz")) {
@@ -68,30 +71,27 @@ public class BoggleConsole {
 			word = word.toLowerCase();
 			if (inList(word))
 				continue;
-			if (Tray.found(word) 
-					&& isInDic(word) 
-					&& !word.equals("zz")) {
+			if (Tray.found(word) && isInDic(word) && !word.equals("zz")) {
 				this.wordList.add(word);
-			}
-			else {
+			} else {
 				if (!word.equals("zz"))
 					this.incorrectList.add(word.toLowerCase());
 			}
 		}
 		input.close();
 	}
-	
+
 	private void scoreCount() {
 		/**
 		 * Count the score from the words user get
 		 */
-		for (int i = 0; i < this.wordList.size(); i ++) {
+		for (int i = 0; i < this.wordList.size(); i++) {
 			String word = this.wordList.get(i);
-			if(word.length() == 3)
+			if (word.length() == 3)
 				this.score++;
-			else if(word.length() == 4)
+			else if (word.length() == 4)
 				this.score++;
-			else if(word.length() == 5)
+			else if (word.length() == 5)
 				this.score = this.score + 2;
 			else if (word.length() == 6)
 				this.score = this.score + 3;
@@ -103,14 +103,14 @@ public class BoggleConsole {
 		System.out.print("Score: " + this.score);
 		System.out.println("\n");
 	}
-	
-	private void getSortedFoundList(){
+
+	private void getSortedFoundList() {
 		/**
 		 * print a list of found words in sorted way
 		 */
 		Collections.sort(this.wordList);
 		System.out.println("Words you found:");
-		for (int i = 0; i < this.wordList.size(); i ++) {
+		for (int i = 0; i < this.wordList.size(); i++) {
 			String word = this.wordList.get(i);
 			if (i + 1 == this.wordList.size())
 				System.out.print(word);
@@ -119,14 +119,14 @@ public class BoggleConsole {
 		}
 		System.out.println("\n");
 	}
-	
+
 	private void getSortedIncorrectList() {
 		/**
 		 * get the incoorect words sorted
 		 */
 		Collections.sort(this.incorrectList);
 		System.out.println("Incorrect Words:");
-		for (int i = 0; i < this.incorrectList.size(); i ++) {
+		for (int i = 0; i < this.incorrectList.size(); i++) {
 			String word = this.incorrectList.get(i);
 			if (i + 1 == this.incorrectList.size())
 				System.out.print(word);
@@ -135,9 +135,7 @@ public class BoggleConsole {
 		}
 		System.out.println("\n");
 	}
-	
 
-	
 	private boolean isInDic(String word) {
 		/**
 		 * test if a word is in the dictionary
@@ -146,7 +144,7 @@ public class BoggleConsole {
 			File inFile = new File("BoggleWords.txt");
 			Scanner dic = new Scanner(inFile);
 			while (dic.hasNext()) {
-				if(word.equals(dic.next()))
+				if (word.equals(dic.next()))
 					return true;
 			}
 			dic.close();
@@ -156,12 +154,12 @@ public class BoggleConsole {
 		}
 		return false;
 	}
-	
+
 	private boolean inList(String str) {
 		/**
-		 *  Test if a word is already in the lists
+		 * Test if a word is already in the lists
 		 */
-		for (int i = 0; i < this.wordList.size(); i ++) {
+		for (int i = 0; i < this.wordList.size(); i++) {
 			String word = this.wordList.get(i);
 			if (str.equals(word))
 				return true;
@@ -173,7 +171,7 @@ public class BoggleConsole {
 		}
 		return false;
 	}
-	
+
 	private void otherWords(DiceTray Tray) {
 		/**
 		 * get what other words can be found in the matrix
@@ -185,8 +183,8 @@ public class BoggleConsole {
 			this.otherW = "";
 			while (dic.hasNext()) {
 				String w = dic.next();
-				if(Tray.found(w) && !inList(w)) {
-					this.otherW += w +" ";
+				if (Tray.found(w) && !inList(w)) {
+					this.otherW += w + " ";
 					this.otherCounts++;
 					if (this.otherCounts % 20 == 0)
 						this.otherW += "\n";
@@ -199,14 +197,14 @@ public class BoggleConsole {
 		}
 
 	}
-	
+
 	private int getOtherCounts() {
 		/**
 		 * get the count of other words
 		 */
 		return this.otherCounts;
 	}
-	
+
 	private String getOtherW() {
 		/**
 		 * other word that can found from the matrix
